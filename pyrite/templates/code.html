@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Notebook</title>
+</head>
+<body>
+    <header>Code Runner</header>
+    <button id="addCell">Add Cell</button>
+    <button id="addMark">Add Markup</button>
+
+    <div id="cellsContainer"></div>
+
+    
+</body>
+<script>
+    const notebookId = "{{ notebook_id }}";
+</script>
+<script src="{{ url_for('static', filename='scripts.js') }}" defer>
+
+</script>
+
+
+</html>

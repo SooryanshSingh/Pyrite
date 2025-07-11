@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Notebooks</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-auth-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "{{ firebase_config['apiKey'] }}",
+            authDomain: "{{ firebase_config['authDomain'] }}",
+            projectId: "{{ firebase_config['projectId'] }}",
+            storageBucket: "{{ firebase_config['storageBucket'] }}",
+            messagingSenderId: "{{ firebase_config['messagingSenderId'] }}",
+            appId: "{{ firebase_config['appId'] }}",
+            measurementId: "{{ firebase_config['measurementId'] }}"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+    </script>
+</head>
+<body>
+    <header>
+        <h1 id="welcomeText">Welcome Guest</h1>
+        <a href="{{ url_for('logout') }}" id="logoutLink" style="display:none;">Logout</a>
+        <button id="loginBtn" onclick="googleLogin()">Login with Google</button>
+    </header>
+
+    <div id="notebookSection" style="display:none;">
+        <button id="addNotebook">+ Create New Notebook</button>
+        <h2>Your Notebooks</h2>
+        <ul id="notebookList"></ul>
+    </div>
+
+    <script>
+        // Firebase auth listener
+        firebase.auth().onAuthStateChanged(async (user) => {
+            if (user) {
+                const idToken = await user.getIdToken();
+
+                const res = await fetch("/session-login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ idToken })
+                });
+
+                if (res.ok) {
+                    document.getElementById("loginBtn").style.display = "none";
+                    document.getElementById("logoutLink").style.display = "inline";
+                    document.getElementById("welcomeText").innerText = "Welcome, " + (user.displayName || user.email);
+                    document.getElementById("notebookSection").style.display = "block";
+                    loadNotebooks();
+                } else {
+                    alert("Session login failed");
+                }
+            } else {
+                document.getElementById("loginBtn").style.display = "inline";
+            }
+        });
+
+        // Google login
+        async function googleLogin() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            try {
+                await firebase.auth().signInWithPopup(provider);
+                // session-login is handled by onAuthStateChanged
+            } catch (err) {
+                console.error("Google login failed", err);
+            }
+        }
+
+        // Add notebook
+        const addNotebookBtn = document.getElementById("addNotebook");
+        const notebookList = document.getElementById("notebookList");
+
+        addNotebookBtn?.addEventListener("click", async () => {
+            const title = prompt("Enter notebook title:");
+            if (!title) return;
+
+            const response = await fetch("/notebook/create", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ title })
+            });
+
+            const data = await response.json();
+            if (data.notebook_id) {
+                const li = document.createElement("li");
+                const a = document.createElement("a");
+                a.href = `/notebook/${data.notebook_id}/run`;
+                a.textContent = data.title;
+                li.appendChild(a);
+                notebookList.appendChild(li);
+            } else {
+                alert("Error creating notebook.");
+            }
+        });
+
+        // Load notebooks
+        async function loadNotebooks() {
+            try {
+                const response = await fetch("/notebooks");
+                const notebooks = await response.json();
+
+                notebooks.forEach(nb => {
+                    const li = document.createElement("li");
+                    const a = document.createElement("a");
+                    a.href = `/notebook/${nb.notebook_id}/run`;
+                    a.textContent = nb.title || "Untitled";
+                    li.appendChild(a);
+                    notebookList.appendChild(li);
+                });
+            } catch (err) {
+                console.error("Failed to load notebooks", err);
+            }
+        }
+    </script>
+</body>
+</html>

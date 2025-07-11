@@ -1,0 +1,247 @@
+
+body{
+  padding: 0;
+  margin: 0;
+}
+a{
+  color: red;
+}
+.container {
+  padding: 0;
+  margin: 0;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #617b83;
+  }
+
+ /*sign in sign up*/
+
+  .auth-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px 15px 10px 15px;
+    margin: 10px 10px 10px -10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  
+  button {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #026682;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #617b83;
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  a {
+    color: #026682;
+    text-decoration: none;
+    margin-top: 10px;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  #signin-error-message, #signup-error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  
+  @media (max-width: 480px) {
+    .auth-container {
+      padding: 20px;
+    }
+  
+    h1 {
+      font-size: 20px;
+    }
+  
+    input, button {
+      font-size: 14px;
+    }
+  }
+  /*homepage*/
+
+  header{
+  font-size:60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #9dcedb;
+  }
+  header button{
+   
+    width: 100px;
+  }
+  main {
+    display: flex;
+    gap: 20px;
+  }
+  
+  main button {
+    width: 100px;
+    height: 100px;
+    margin-left: 20px;
+  }
+  
+  
+
+  #logout{
+    padding: 10;
+    margin: 0;
+  }
+
+
+.note-main{
+  width: 1350px;
+  background-color: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 30px;
+ 
+}
+
+.output{
+  width: 100%;
+  height: 150px;
+  border: 2px solid #026682;
+  overflow-y: auto;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 1rem;
+  color: #333;
+  background-color: #e0f7fa;
+  resize: none;
+  margin: 10px; 
+}
+
+  .note-content {
+    width: 100%;
+    height: 50px;
+    border: 2px solid #011920;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+    color: #ffffff;
+    background-color: #012125;
+    resize: none;
+    margin: 10px; 
+    
+  }
+  
+  .save-note {
+    width: 200px;
+    height: 40px;
+    background-color: #026682;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    align-self: center;
+  }
+  
+  .save-note:hover {
+    background-color: #014f5d;
+  }
+  
+  #save-note:active {
+    background-color: #013d4c;
+  }
+  
+  @media (max-width: 768px) {
+    main {
+      width: 90%;
+      padding: 15px;
+    }
+  
+    #note-content {
+      height: 100px;
+    }
+  
+    #save-note {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 1.5rem;
+    }
+  
+    main {
+      width: 90%;
+      padding: 10px;
+    }
+  
+    #note-content {
+      height: 100px;
+    }
+  
+    #save-note {
+      height: 45px;
+    }
+  }
+ul{
+  display: flex;
+  gap: 20px ;
+}
+  li {
+    background-color: #026682;
+    color: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
